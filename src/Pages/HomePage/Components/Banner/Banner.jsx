@@ -15,11 +15,11 @@ const Banner = () => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
-      className="h-[768px] "
+      className="lg:h-[768px] "
     >
       <img className="absolute top-0 right-0" src={elipse} alt="" />
 
-      <div className=" h-[650px] top-28 relative pt-20 grid grid-cols-2">
+      <div className=" lg:h-[650px] top-10 lg:top-12 xl:top-28 relative pt-20 grid  lg:grid-cols-2">
         <GridDivOne />
         <GridDIvTwo />
       </div>
