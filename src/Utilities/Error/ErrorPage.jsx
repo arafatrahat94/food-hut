@@ -2,6 +2,7 @@ import Lottie from "lottie-react";
 import gradientImg from "../../assets/ErrorPageElement/gardientBg.png";
 import fourImg from "../../assets/ErrorPageElement/Vector.png";
 import burgurAnimation from "../../assets/ErrorPageElement/burgurAnimation.json";
+import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
     <div
@@ -29,9 +30,12 @@ const ErrorPage = () => {
       <h1 className="font-Poppins mt-5 md:text-3xl font-semibold text-accent">
         Page not found
       </h1>
-      <button className="btn rounded-3xl px-7 bg-accent text-base-200 mt-5 scale-75 lg:scale-100 font-Poppins">
+      <Link
+        to={"/"}
+        className="btn rounded-3xl px-7 bg-accent text-base-200 mt-5 scale-75 transform duration-300 lg:scale-100 font-Poppins"
+      >
         Back To Home
-      </button>
+      </Link>
     </div>
   );
 };
