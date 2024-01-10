@@ -4,6 +4,12 @@
 @tailwind components;
 
 @layer components {
+  .menuActive {
+    @apply btn rounded-[1rem] me-4 px-8 bg-accent text-white;
+  }
+  .menuInActive {
+    @apply btn rounded-[3rem] me-4 border border-accent px-8 bg-white text-accent;
+  }
   .containerWithoutScrollBar {
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */

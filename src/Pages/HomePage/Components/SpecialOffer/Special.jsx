@@ -1,3 +1,5 @@
+import SwipeCardSection from "./SwipeCardSection";
+
 const Special = () => {
   return (
     <div>
@@ -8,6 +10,8 @@ const Special = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non rerum
         laborum minus odio eaque odit nam possimus dolorum saepe impedit?
       </p>
+
+      <SwipeCardSection></SwipeCardSection>
     </div>
   );
 };
