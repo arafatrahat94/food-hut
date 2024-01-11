@@ -9,8 +9,11 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { ServerUrl } from "../../Utilities/Server/Url";
 const SignUp = () => {
   const { user, createNew, gLogin } = useAuth();
+  const url = ServerUrl;
+
   const {
     register,
     handleSubmit,
@@ -40,7 +43,7 @@ const SignUp = () => {
     createNew(userEmail, pass)
       .then((res) => {
         axios
-          .post(`http://localhost:7000/User`, newData)
+          .post(url + `User`, newData)
           .then((res) => {
             if (res.data) {
               toast.success("user created");
@@ -75,7 +78,7 @@ const SignUp = () => {
           email: res.user?.email,
         };
         axios
-          .post(`http://localhost:7000/User`, newData)
+          .post(url + `User`, newData)
           .then((res) => {
             if (res.data) {
               toast.success("user created");

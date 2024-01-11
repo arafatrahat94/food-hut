@@ -10,10 +10,12 @@ import {
 } from "firebase/auth";
 import app from "../FireBase/FireBase";
 import axios from "axios";
+import { ServerUrl } from "../Utilities/Server/Url";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
+  const url = ServerUrl;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const createNew = (email, pass) => {
@@ -36,12 +38,17 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       if (currentUser?.email) {
         axios
-          .get(`http://localhost:7000/User?email=${currentUser.email}`)
+          .get(url + `User?email=${currentUser.email}`)
           .then((res) => setUser(res?.data));
+        setTimeout(() => {
+          axios
+            .get(url + `User?email=${currentUser.email}`)
+            .then((res) => setUser(res?.data));
+        }, 5000);
       }
     });
     return () => unSub();
-  }, []);
+  }, [url]);
   console.log(user);
   const authData = {
     user,

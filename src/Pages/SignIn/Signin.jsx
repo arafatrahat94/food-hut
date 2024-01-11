@@ -1,4 +1,3 @@
-import Lottie from "lottie-react";
 import gradientImg from "../../assets/ErrorPageElement/gardientBg.png";
 
 import burgerAnimation from "../../assets/SIgnInpage/Banner.svg";
@@ -7,12 +6,12 @@ import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import ComponentLoading from "../../Utilities/Componentloading/ComponentLoading";
 const SignIn = () => {
-  const [emailRef, setEmailfRef] = useState(null);
-  const { user, login, gLogin, forgetPass } = useAuth();
+  const [emailRef, setEmailRef] = useState(null);
+  const { login, gLogin, forgetPass } = useAuth();
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -92,7 +91,7 @@ const SignIn = () => {
                   placeholder=""
                   className="text-accent input  bg-transparent rounded-3xl border-2 focus:border-accent border-accent focus:outline-none input-bordered"
                   {...register("userEmail")}
-                  onChange={(e) => setEmailfRef(e.target.value)}
+                  onChange={(e) => setEmailRef(e.target.value)}
                   required
                 />
               </div>
