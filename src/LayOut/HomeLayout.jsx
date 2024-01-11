@@ -3,12 +3,12 @@ import Nav from "../Utilities/Navbar/Nav";
 import Footer from "../Utilities/Footer/Footer";
 
 const HomeLayout = () => {
-  const locaion = window.location.pathname === "/SignIn";
+  const location = window.location.pathname === "/SignIn" || "/SignUp";
   return (
     <div className="">
-      {!locaion && <Nav></Nav>}
+      {!location && <Nav></Nav>}
       <Outlet />
-      {!locaion && <Footer />}
+      {!location && <Footer />}
     </div>
   );
 };
