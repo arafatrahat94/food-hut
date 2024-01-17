@@ -7,6 +7,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import app from "../FireBase/FireBase";
 import axios from "axios";
@@ -33,6 +34,10 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return sendPasswordResetEmail(auth, email);
   };
+  const LogOut = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (currentUser) => {
       setLoading(false);
@@ -56,7 +61,9 @@ const AuthProvider = ({ children }) => {
     loading,
     gLogin,
     login,
+    setUser,
     forgetPass,
+    LogOut,
   };
   return (
     <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>

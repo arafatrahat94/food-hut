@@ -4,6 +4,12 @@
 @tailwind components;
 
 @layer components {
+  .activeC {
+    @apply text-accent duration-300 transform;
+  }
+  .cardActive {
+    @apply text-accent border-accent bg-accent bg-opacity-5 border-opacity-35;
+  }
   .menuActive {
     @apply btn rounded-[1rem] me-4 px-8 bg-accent text-white;
   }

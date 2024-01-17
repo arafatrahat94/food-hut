@@ -4,6 +4,7 @@ export default {
   theme: {
     screens: {
       custScreen: "393px",
+      mobileL: "425px",
       sm: "640px",
       // => @media (min-width: 640px) { ... }
 
