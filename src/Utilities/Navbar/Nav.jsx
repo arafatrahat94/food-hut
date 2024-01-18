@@ -93,7 +93,8 @@ const Nav = () => {
             >
               Home <SiBlockchaindotcom />
             </Link>
-            <div
+            <a
+              href="#Special"
               onClick={() => {
                 setOffer(true);
                 setCart(false);
@@ -107,10 +108,10 @@ const Nav = () => {
                   ? "activeC"
                   : ""
               } 
-              } text-sm flex items-center gap-x-1 `}
+              text-sm cursor-pointer flex items-center gap-x-1 `}
             >
               Todays Offers <FaFire />
-            </div>
+            </a>
             <Link
               onClick={() => {
                 setOffer(false);

@@ -4,6 +4,10 @@
 @tailwind components;
 
 @layer components {
+  html,
+  body {
+    scroll-behavior: smooth;
+  }
   .activeC {
     @apply text-accent duration-300 transform;
   }
