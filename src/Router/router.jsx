@@ -5,6 +5,8 @@ import ErrorPage from "../Utilities/Error/ErrorPage";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import TodaysOffer from "../Pages/TodaysOffer/TodaysOffer";
+
+import Menue from "../Pages/Menu/Menu";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/TodaysOffer",
         element: <TodaysOffer />,
+      },
+      {
+        path: "/Menu",
+        element: <Menue />,
       },
     ],
   },

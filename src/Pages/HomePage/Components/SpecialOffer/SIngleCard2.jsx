@@ -18,7 +18,7 @@ const SingleCard2 = ({ data, setFoodData, setInitialPrice }) => {
           }, 500);
           setOnfocus(true);
         }}
-        onMouseLeave={() => {
+        onMouseOut={() => {
           setShowDetails(false);
 
           setOnfocus(false);

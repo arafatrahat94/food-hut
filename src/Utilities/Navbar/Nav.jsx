@@ -93,26 +93,53 @@ const Nav = () => {
             >
               Home <SiBlockchaindotcom />
             </Link>
-            <a
-              href="#Special"
-              onClick={() => {
-                setOffer(true);
-                setCart(false);
-                setOurMenu(false);
-                setPopular(false);
-                setShowNav(!showNav);
-                setwhyFoodHut(false);
-              }}
-              className={`${
-                offer || window.location.pathname === "/TodaysOffer"
-                  ? "activeC"
-                  : ""
-              } 
-              text-sm cursor-pointer flex items-center gap-x-1 `}
-            >
-              Todays Offers <FaFire />
-            </a>
-            <Link
+            {window.location.pathname !== "/" &&
+            window.location.pathname !== "/TodaysOffer" ? (
+              <Link to={"/"}>
+                <a
+                  href="#Special"
+                  onClick={() => {
+                    setTimeout(() => {
+                      document.getElementById("click1").click();
+                    }, 2000);
+                    setOffer(true);
+                    setCart(false);
+                    setOurMenu(false);
+                    setPopular(false);
+                    setShowNav(!showNav);
+                    setwhyFoodHut(false);
+                  }}
+                  className={`${
+                    offer || window.location.pathname === "/TodaysOffer"
+                      ? "activeC"
+                      : ""
+                  } text-sm flex items-center gap-x-1 `}
+                >
+                  Today&apos;s Offer <FaFire />
+                </a>
+              </Link>
+            ) : (
+              <a
+                href="#Special"
+                id="click1"
+                onClick={() => {
+                  setOffer(true);
+                  setCart(false);
+                  setOurMenu(false);
+                  setPopular(false);
+                  setShowNav(!showNav);
+                  setwhyFoodHut(false);
+                }}
+                className={`${
+                  offer || window.location.pathname === "/TodaysOffer"
+                    ? "activeC"
+                    : ""
+                } text-sm flex items-center gap-x-1 `}
+              >
+                Today&apos;sOffer <FaFire />
+              </a>
+            )}
+            {/* <Link
               onClick={() => {
                 setOffer(false);
                 setCart(false);
@@ -126,23 +153,55 @@ const Nav = () => {
               } text-sm flex items-center gap-x-1 `}
             >
               Why FoodHut <FaRegCircleQuestion />
-            </Link>
-            <Link
-              onClick={() => {
-                setOffer(false);
-                setCart(false);
-                setOurMenu(true);
-                setPopular(false);
-                setShowNav(!showNav);
-                setwhyFoodHut(false);
-              }}
-              className={`${
-                OurMenu ? "activeC" : ""
-              } text-sm flex items-center gap-x-1 `}
-            >
-              Our Menu <PiBowlFoodBold />
-            </Link>
-            <Link
+            </Link> */}
+            {window.location.pathname !== "/" &&
+            window.location.pathname !== "/Menu" ? (
+              <Link to={"/"}>
+                <a
+                  href="#Menu"
+                  onClick={() => {
+                    setTimeout(() => {
+                      document.getElementById("click2").click();
+                    }, 2000);
+                    setOffer(false);
+                    setCart(false);
+                    setOurMenu(true);
+                    setPopular(false);
+                    setShowNav(false);
+                    setwhyFoodHut(false);
+                  }}
+                  className={`${
+                    OurMenu || window.location.pathname === "/Menu"
+                      ? "activeC"
+                      : ""
+                  } text-sm flex items-center gap-x-1 `}
+                >
+                  Our Menu <PiBowlFoodBold />
+                </a>
+              </Link>
+            ) : (
+              <a
+                href="#Menu"
+                id="click2"
+                onClick={() => {
+                  setOffer(false);
+                  setCart(false);
+                  setOurMenu(true);
+                  setPopular(false);
+                  setShowNav(false);
+                  setwhyFoodHut(false);
+                }}
+                className={`${
+                  OurMenu || window.location.pathname === "/Menu"
+                    ? "activeC"
+                    : ""
+                } text-sm flex items-center gap-x-1 `}
+              >
+                Our Menu <PiBowlFoodBold />
+              </a>
+            )}
+
+            {/* <Link
               onClick={() => {
                 setOffer(false);
                 setCart(false);
@@ -156,7 +215,7 @@ const Nav = () => {
               } text-sm flex items-center gap-x-1 `}
             >
               Our Popular Food <TiStarFullOutline />
-            </Link>
+            </Link> */}
             <div
               onClick={() => {
                 setOffer(false);
@@ -263,53 +322,101 @@ const Nav = () => {
           >
             Home <SiBlockchaindotcom />
           </Link>
-          <div
-            onClick={() => {
-              setOffer(true);
-              setCart(false);
-              setOurMenu(false);
-              setPopular(false);
-              setShowNav(!showNav);
-              setwhyFoodHut(false);
-            }}
-            className={`${
-              offer || window.location.pathname === "/TodaysOffer"
-                ? "activeC"
-                : ""
-            } text-sm flex items-center gap-x-1 `}
-          >
-            Todays Offers <FaFire />
-          </div>
-          <Link
-            onClick={() => {
-              setOffer(false);
-              setCart(false);
-              setOurMenu(false);
-              setPopular(false);
-              setShowNav(!showNav);
-              setwhyFoodHut(true);
-            }}
-            className={`${
-              whyFoodHut ? "activeC" : ""
-            } text-sm flex items-center gap-x-1 `}
-          >
-            Why FoodHut <FaRegCircleQuestion />
-          </Link>
-          <Link
-            onClick={() => {
-              setOffer(false);
-              setCart(false);
-              setOurMenu(true);
-              setPopular(false);
-              setShowNav(!showNav);
-              setwhyFoodHut(false);
-            }}
-            className={`${
-              OurMenu ? "activeC" : ""
-            } text-sm flex items-center gap-x-1 `}
-          >
-            Our Menu <PiBowlFoodBold />
-          </Link>
+
+          {window.location.pathname !== "/" &&
+          window.location.pathname !== "/TodaysOffer" ? (
+            <Link to={"/"}>
+              <a
+                href="#Special"
+                onClick={() => {
+                  setTimeout(() => {
+                    document.getElementById("click1").click();
+                  }, 2000);
+                  setOffer(true);
+                  setCart(false);
+                  setOurMenu(false);
+                  setPopular(false);
+                  setShowNav(false);
+                  setwhyFoodHut(false);
+                }}
+                className={`${
+                  offer || window.location.pathname === "/TodaysOffer"
+                    ? "activeC"
+                    : ""
+                } text-sm flex items-center gap-x-1 `}
+              >
+                Today&apos;s Offer <FaFire />
+              </a>
+            </Link>
+          ) : (
+            <a
+              href="#Special"
+              id="click1"
+              onClick={() => {
+                setOffer(true);
+                setCart(false);
+                setOurMenu(false);
+                setPopular(false);
+                setShowNav(false);
+                setwhyFoodHut(false);
+              }}
+              className={`${
+                offer || window.location.pathname === "/TodaysOffer"
+                  ? "activeC"
+                  : ""
+              } text-sm flex items-center gap-x-1 `}
+            >
+              Today&apos;sOffer <FaFire />
+            </a>
+          )}
+          {/* !&&
+            
+           */}
+          {window.location.pathname !== "/" &&
+          window.location.pathname !== "/Menu" ? (
+            <Link to={"/"}>
+              <a
+                href="#Menu"
+                onClick={() => {
+                  setTimeout(() => {
+                    document.getElementById("click2").click();
+                  }, 2000);
+                  setOffer(false);
+                  setCart(false);
+                  setOurMenu(true);
+                  setPopular(false);
+                  setShowNav(false);
+                  setwhyFoodHut(false);
+                }}
+                className={`${
+                  OurMenu || window.location.pathname === "/Menu"
+                    ? "activeC"
+                    : ""
+                } text-sm flex items-center gap-x-1 `}
+              >
+                Our Menu <PiBowlFoodBold />
+              </a>
+            </Link>
+          ) : (
+            <a
+              href="#Menu"
+              id="click2"
+              onClick={() => {
+                setOffer(false);
+                setCart(false);
+                setOurMenu(true);
+                setPopular(false);
+                setShowNav(false);
+                setwhyFoodHut(false);
+              }}
+              className={`${
+                OurMenu || window.location.pathname === "/Menu" ? "activeC" : ""
+              } text-sm flex items-center gap-x-1 `}
+            >
+              Our Menu <PiBowlFoodBold />
+            </a>
+          )}
+
           <Link
             onClick={() => {
               setOffer(false);

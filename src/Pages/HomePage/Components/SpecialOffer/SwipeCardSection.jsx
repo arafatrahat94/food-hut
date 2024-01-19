@@ -11,7 +11,7 @@ import Lottie from "lottie-react";
 import loadingAnimation from "../../../../assets/animation/componentLoader.json";
 import gradientImg from "../../../../assets/ErrorPageElement/gardientBg.png";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { IoIosArrowDropright } from "react-icons/io";
+import { IoIosArrowDropright, IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 const SwipeCardSection = () => {
   const url = ServerUrl;
@@ -568,14 +568,51 @@ const SwipeCardSection = () => {
         </>
       )}
       {window.location.pathname === "/TodaysOffer" && (
-        <div className="flex ms-10 gap-x-2">
+        <div className="flex h-[50px] items-center mt-10 ms-10 transform duration-300 gap-x-[4px]">
+          <div className={`w-[30px]  h-[30px]  `}>
+            {pageNum > 0 && (
+              <div
+                onClick={() => {
+                  if (pageNum === 0) {
+                    return;
+                  }
+                  setPageNum(pageNum - 1);
+                  fetch(
+                    ServerUrl +
+                      `OfferedProducts?page=${
+                        pageNum - 1
+                      }&limit=${itemsPerPage}`
+                  )
+                    .then((res) => res.json())
+                    .then((data) => {
+                      setTimeout(() => {
+                        setLoadingCheck(false);
+                      }, 2000);
+                      setFoodCount(data.count);
+                      setFoods(data.data);
+                    });
+                }}
+                className="animate-pulse"
+              >
+                <button
+                  className={`w-[30px]  h-[30px] border  text-accent hover:scale-100 border-accent transform duration-500  flex justify-center items-center text-center ${
+                    pageNum > 0
+                      ? "opacity-100 transform duration-300"
+                      : "opacity-0 transform duration-300"
+                  } rounded-xl`}
+                >
+                  <IoIosArrowForward className="text-center rotate-180" />
+                </button>
+              </div>
+            )}
+          </div>
           {pageNumber.map((number, i) => (
             <button
-              className={`w-[30px] h-[40px] border  ${
+              className={`w-[30px]  h-[40px] border  ${
                 pageNum === i
-                  ? "text-white transform duration-500 bg-accent  border-accent"
-                  : "text-accent border-accent transform duration-500"
-              } rounded-3xl `}
+                  ? "text-white w-[30px]  h-[40px] transform duration-500 bg-accent  border-accent   rounded-3xl"
+                  : "text-accent border-2 rounded-full w-[12px] text-opacity-0 h-[12px] border-accent transform duration-500"
+              } `}
               onClick={() => {
                 setPageNum(number);
                 setLoadingCheck(true);
@@ -603,6 +640,43 @@ const SwipeCardSection = () => {
               {number}
             </button>
           ))}
+
+          {pageNum + 1 !== totalPage && (
+            <div
+              onClick={() => {
+                if (pageNum + 1 === totalPage) {
+                  return;
+                }
+                setLoadingCheck(true);
+                setPageNum(pageNum + 1);
+                if (window.screen.width <= 425) {
+                  window.scrollTo(0, 250);
+                } else {
+                  window.scrollTo(0, 300);
+                }
+
+                fetch(
+                  ServerUrl +
+                    `OfferedProducts?page=${pageNum + 1}&limit=${itemsPerPage}`
+                )
+                  .then((res) => res.json())
+                  .then((data) => {
+                    setTimeout(() => {
+                      setLoadingCheck(false);
+                    }, 2000);
+                    setFoodCount(data.count);
+                    setFoods(data.data);
+                  });
+              }}
+              className="animate-pulse"
+            >
+              <button
+                className={`w-[30px]  h-[30px] border  text-accent hover:scale-100 border-accent transform duration-500  flex justify-center items-center text-center  rounded-xl`}
+              >
+                <IoIosArrowForward className="text-center" />
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
