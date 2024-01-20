@@ -80,11 +80,17 @@ const Nav = () => {
     }
   }, []);
 
-  const handleLogOut = () => {
+  const handleLogOut = (t) => {
     LogOut()
       .then(() => {
         setUser(null);
-        toast.success("user signed out");
+        toast.success("user signed out", {
+          id: "signedOut",
+        });
+        setShowNav(false);
+        setTimeout(() => {
+          toast.dismiss();
+        }, 2000);
       })
       .catch((err) => toast.error(err.message));
   };
@@ -96,7 +102,7 @@ const Nav = () => {
         <div className="flex justify-between gap-x-2 mt-3">
           <button
             onClick={() => {
-              handleLogOut();
+              handleLogOut(t);
               toast.dismiss(t.id);
             }}
             className="px-5 py-2 bg-accent text-white rounded-[3rem]"

@@ -31,6 +31,9 @@ const SignIn = () => {
       .then(() => {
         setLoading(false);
         toast.success("welcome back user");
+        setTimeout(() => {
+          toast.dismiss();
+        }, 2000);
         navigate("/", { replace: true });
         reset();
       })
@@ -46,6 +49,9 @@ const SignIn = () => {
       .then(() => {
         toast.success("welcome back user");
         reset();
+        setTimeout(() => {
+          toast.dismiss();
+        }, 2000);
         navigate("/", { replace: true });
         setLoading(false);
       })

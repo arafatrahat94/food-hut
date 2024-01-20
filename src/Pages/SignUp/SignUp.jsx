@@ -49,6 +49,9 @@ const SignUp = () => {
             if (res.data) {
               toast.success("user created");
               reset();
+              setTimeout(() => {
+                toast.dismiss();
+              }, 2000);
             }
             navigate("/", { replace: true });
             setLoading(false);
@@ -85,6 +88,9 @@ const SignUp = () => {
             if (res.data) {
               toast.success("user created");
               reset();
+              setTimeout(() => {
+                toast.dismiss();
+              }, 2000);
               navigate("/", { replace: true });
             }
             setLoading(false);
