@@ -8,6 +8,7 @@ import MoreThanService from "./MoreThanService/MoreThanService";
 import { Toaster } from "react-hot-toast";
 import Popular from "./PopularFoods/Popular";
 import Search from "./Search/Search";
+import { Helmet } from "react-helmet-async";
 export const contexts = createContext(null);
 const Home = () => {
   useEffect(() => {
@@ -22,6 +23,9 @@ const Home = () => {
   return (
     <>
       <contexts.Provider value={sendingData} className="">
+        <Helmet>
+          <title>Home | FoodHut</title>
+        </Helmet>
         <Banner></Banner>
         {searchResut.length > 0 && <Search />}
         <Special></Special>

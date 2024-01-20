@@ -10,6 +10,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { ServerUrl } from "../../Utilities/Server/Url";
+import { Helmet } from "react-helmet-async";
 const SignUp = () => {
   const { user, createNew, gLogin } = useAuth();
   const url = ServerUrl;
@@ -108,6 +109,9 @@ const SignUp = () => {
         backgroundSize: "cover",
       }}
     >
+      <Helmet>
+        <title>SignUp | FoodHut</title>
+      </Helmet>
       {loading ? (
         <ComponentLoading></ComponentLoading>
       ) : (

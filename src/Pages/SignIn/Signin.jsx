@@ -9,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import ComponentLoading from "../../Utilities/Componentloading/ComponentLoading";
+import { Helmet } from "react-helmet-async";
 const SignIn = () => {
   const [emailRef, setEmailRef] = useState(null);
   const { login, gLogin, forgetPass } = useAuth();
@@ -68,6 +69,9 @@ const SignIn = () => {
         backgroundSize: "cover",
       }}
     >
+      <Helmet>
+        <title>SignIn | FoodHut</title>
+      </Helmet>
       {loading ? (
         <ComponentLoading></ComponentLoading>
       ) : (
