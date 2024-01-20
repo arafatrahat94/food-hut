@@ -1,5 +1,7 @@
 import imgs from "../../../assets/bannerAndNavbarElements/Rectanglereverse.svg";
 import chef from "../../../assets/AppDownLoad/chef.svg";
+import svg from "../../../assets/AppDownLoad/Mobile app store badge.svg";
+import svg1 from "../../../assets/AppDownLoad/Mobile app store badge (1).svg";
 const AppDownload = () => {
   return (
     <div className="mt-[84px]">
@@ -23,14 +25,8 @@ const AppDownload = () => {
             delivery
           </p>
           <div className="flex gap-x-3 lg:ms-0 ms-5 mt-8  xl:text-xl w-[85%] text-black gap-y-8  font-semibold lg:mt-12 pb-10">
-            <img
-              src="../../../assets/AppDownLoad/Mobile app store badge (1).svg"
-              alt=""
-            />
-            <img
-              src="../../../assets/AppDownLoad/Mobile app store badge.svg"
-              alt=""
-            />
+            <img src={svg1} alt="" />
+            <img src={svg} alt="" />
           </div>
         </div>
         <img src={chef} className="w-[80%] lg:order-2 order-1 mx-auto" alt="" />
