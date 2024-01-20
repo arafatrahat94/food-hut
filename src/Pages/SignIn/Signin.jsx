@@ -2,7 +2,7 @@ import gradientImg from "../../assets/ErrorPageElement/gardientBg.png";
 
 import burgerAnimation from "../../assets/SIgnInpage/Banner.svg";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
@@ -12,6 +12,7 @@ import ComponentLoading from "../../Utilities/Componentloading/ComponentLoading"
 const SignIn = () => {
   const [emailRef, setEmailRef] = useState(null);
   const { login, gLogin, forgetPass } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -29,6 +30,7 @@ const SignIn = () => {
       .then(() => {
         setLoading(false);
         toast.success("welcome back user");
+        navigate("/", { replace: true });
         reset();
       })
       .catch((err) => {
@@ -43,6 +45,7 @@ const SignIn = () => {
       .then(() => {
         toast.success("welcome back user");
         reset();
+        navigate("/", { replace: true });
         setLoading(false);
       })
       .catch((error) => {
@@ -96,7 +99,7 @@ const SignIn = () => {
                 />
               </div>
               <div className="form-control">
-                <div className="w-full xl:w-1/2 relative">
+                <div className="w-full  relative">
                   <label className="label">
                     <span className="label-text text-xl text-accent font-semibold">
                       Password
@@ -129,7 +132,7 @@ const SignIn = () => {
                 </label>
                 <button
                   className="btn bg-accent
-             text-white w-[190px] rounded-[3rem] mx-auto mt-7"
+             text-white w-[190px] hover:text-accent hover:border hover:border-accent hover:bg-white rounded-[3rem] mx-auto mt-7"
                 >
                   Sign in
                 </button>
@@ -140,7 +143,7 @@ const SignIn = () => {
                 <button
                   type="button"
                   onClick={GLoginHandle}
-                  className="flex gap-x-2 border-accent text-accent btn items-center bg-transparent w-[150px] mx-auto h-[50px] rounded-[.5rem] mt-5  text-xl"
+                  className="flex gap-x-2 border-accent text-accent hover:text-accent hover:border hover:border-accent hover:bg-white btn items-center bg-transparent w-[150px] mx-auto h-[50px] rounded-[.5rem] mt-5  text-xl"
                 >
                   <FcGoogle /> Google
                 </button>

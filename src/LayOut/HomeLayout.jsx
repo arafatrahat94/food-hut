@@ -6,8 +6,10 @@ import Lottie from "lottie-react";
 import globalAnimation from "../assets/animation/3dBurger.json";
 import gradientImg from "../assets/ErrorPageElement/gardientBg.png";
 import { Toaster } from "react-hot-toast";
+import ScrolltoTop from "../Utilities/ScrollToTop/ScrollToTop";
 const HomeLayout = () => {
-  const location = window.location.pathname === ("/SignIn" || "/SignUp");
+  const location = window.location.pathname === "/SignIn";
+  const location2 = window.location.pathname === "/SignUp";
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
@@ -48,9 +50,9 @@ const HomeLayout = () => {
               : "opacity-0 hidden  transform duration-500"
           }`}
         >
-          {!location && <Nav></Nav>}
+          {!location && !location2 && <Nav></Nav>}
           <Outlet />
-          {!location && <Footer />}
+          {!location && !location2 && <Footer />}
         </div>
       </div>
     </div>

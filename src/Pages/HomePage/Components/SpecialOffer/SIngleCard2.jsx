@@ -1,15 +1,21 @@
 import { useState } from "react";
 
 import cardAnimation from "../../../../assets/animation/cardLoading.json";
+import "aos/dist/aos.css";
+Aos.init();
 import Lottie from "lottie-react";
 import useAuth from "../../../../hooks/useAuth";
+import Aos from "aos";
 const SingleCard2 = ({ data, setFoodData, setInitialPrice }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [imgloaded, setImgLoaded] = useState(false);
   const [onfocus, setOnfocus] = useState(false);
 
   return (
-    <div className="w-full cursor-pointer relative justify-center flex">
+    <div
+      data-aos="fade-in"
+      className="w-full cursor-pointer relative justify-center flex"
+    >
       {" "}
       <div
         onClick={() => {

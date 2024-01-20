@@ -7,6 +7,7 @@ import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import GridDivOne from "./GridDivOne";
 import GridDIvTwo from "./GridDIvTwo";
+
 const Banner = () => {
   return (
     <div

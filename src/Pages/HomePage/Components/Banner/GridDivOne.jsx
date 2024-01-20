@@ -6,7 +6,28 @@ import orrange from "../../../../assets/bannerAndNavbarElements/Orange.svg";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import women from "../../../../assets/bannerAndNavbarElements/women.png";
+import { useContext, useState } from "react";
+import { ServerUrl } from "../../../../Utilities/Server/Url";
+import { contexts } from "../../Home";
 const GridDivOne = () => {
+  const [searchType, setSearchType] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { setSearchResult } = useContext(contexts);
+  const handleSearch = () => {
+    if (searchType === "") {
+      setSearchResult([]);
+      return;
+    }
+    setLoading(true);
+    fetch(ServerUrl + `Search?search=${searchType}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+
+        setSearchResult(data);
+        console.log(data);
+      });
+  };
   return (
     <div className="order-2 lg:order-1">
       <img
@@ -44,12 +65,27 @@ const GridDivOne = () => {
         </h1>
         <div className=" h-[50px] xl:h-[60px] rounded-[3rem] border-accent border-2 mt-7 md:w-[400px] xl:w-[467px] border-opacity-50 mx-5 items-center flex">
           <input
+            id="seacrH"
+            onChange={(e) => {
+              if (e.target.value === "") {
+                setSearchType("");
+                setSearchResult([]);
+              }
+              setSearchType(e.target.value);
+            }}
             type="text"
             placeholder="Serch Food"
             className="m-[2px] focus:outline-none text-accent rounded-[3rem] ps-6 text-xl w-[90%] h-full"
           />
-          <button className="p-[6px] me-1 rounded-full flex items-center justify-center  bg-secondary xl:m-[4px]">
-            <IoSearch className="xl:text-3xl text-2xl text-white" />
+          <button
+            onClick={handleSearch}
+            className="p-[6px] me-1 rounded-full flex items-center justify-center  bg-secondary xl:m-[4px]"
+          >
+            <IoSearch
+              className={`${
+                loading && "animate-spin"
+              } xl:text-3xl text-2xl text-white`}
+            />
           </button>
         </div>
         <div className="mt-5 ps-[24px] xl:mt-10 mb-36">

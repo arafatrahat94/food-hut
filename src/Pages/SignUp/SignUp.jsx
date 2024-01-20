@@ -1,7 +1,7 @@
 import gradientImg from "../../assets/ErrorPageElement/gardientBg.png";
 import burgerAnimation from "../../assets/SIgnInpage/Banner.svg";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ComponentLoading from "../../Utilities/Componentloading/ComponentLoading";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -13,7 +13,7 @@ import { ServerUrl } from "../../Utilities/Server/Url";
 const SignUp = () => {
   const { user, createNew, gLogin } = useAuth();
   const url = ServerUrl;
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -49,6 +49,7 @@ const SignUp = () => {
               toast.success("user created");
               reset();
             }
+            navigate("/", { replace: true });
             setLoading(false);
             console.log(res);
           })
@@ -83,6 +84,7 @@ const SignUp = () => {
             if (res.data) {
               toast.success("user created");
               reset();
+              navigate("/", { replace: true });
             }
             setLoading(false);
             console.log(res);
@@ -232,7 +234,7 @@ const SignUp = () => {
                 </label>
                 <button
                   className="btn bg-accent
-           text-white w-[190px] rounded-[3rem] mx-auto mt-7"
+           text-white w-[190px] hover:text-accent hover:border hover:border-accent hover:bg-white rounded-[3rem] mx-auto mt-7"
                 >
                   Sign Up
                 </button>
@@ -243,7 +245,7 @@ const SignUp = () => {
                 <button
                   type="button"
                   onClick={GLoginHandle}
-                  className="flex gap-x-2 border-accent text-accent btn items-center bg-transparent w-[150px] mx-auto h-[50px] rounded-[.5rem] mt-5  text-xl"
+                  className="flex gap-x-2 border-accent text-accent btn items-center bg-transparent w-[150px] hover:text-accent hover:border hover:border-accent hover:bg-white mx-auto h-[50px] rounded-[.5rem] mt-5  text-xl"
                 >
                   <FcGoogle /> Google
                 </button>

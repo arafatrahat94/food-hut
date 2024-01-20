@@ -7,6 +7,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import TodaysOffer from "../Pages/TodaysOffer/TodaysOffer";
 
 import Menue from "../Pages/Menu/Menu";
+import PopularItems from "../Pages/PopularItems/PopularItems";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/Menu",
         element: <Menue />,
+      },
+      {
+        path: "/Popular",
+        element: <PopularItems />,
       },
     ],
   },

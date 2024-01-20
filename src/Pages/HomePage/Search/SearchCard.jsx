@@ -1,74 +1,38 @@
-import { useEffect, useState } from "react";
-import SingleCard2 from "./SIngleCard2";
-import { ServerUrl } from "../../../../Utilities/Server/Url";
+import { useContext, useEffect, useState } from "react";
+
 import { TbBrandPaypal } from "react-icons/tb";
-import useAuth from "../../../../hooks/useAuth";
+
 import { HiOutlineCash, HiOutlineCreditCard } from "react-icons/hi";
 import { MdCheckCircle } from "react-icons/md";
-import { set, useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { Toaster } from "react-hot-toast";
 import Lottie from "lottie-react";
-import loadingAnimation from "../../../../assets/animation/componentLoader.json";
-import gradientImg from "../../../../assets/ErrorPageElement/gardientBg.png";
+import loadingAnimation from "../../../assets/animation/componentLoader.json";
+import gradientImg from "../../../assets/ErrorPageElement/gardientBg.png";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { IoIosArrowDropright, IoIosArrowForward } from "react-icons/io";
-import { Link } from "react-router-dom";
-const SwipeCardSection = () => {
-  const url = ServerUrl;
+
+import { contexts } from "../Home";
+import SingleCard2 from "../Components/SpecialOffer/SIngleCard2";
+import { ServerUrl } from "../../../Utilities/Server/Url";
+import useAuth from "../../../hooks/useAuth";
+const SearchCard = () => {
   const { user } = useAuth();
-  const [itemsPerPage, setItemsPerPage] = useState(6);
+
   const [intialPrice, setInitialPrice] = useState(0);
   const [foodData, setFoodData] = useState([]);
   const [CreditCard, setCreditCard] = useState(true);
   const [Paypal, setPaypal] = useState(false);
   const [Cash, setCash] = useState(false);
   const [loding, setLoading] = useState(false);
-  console.log(foodData);
-  const [foods, setFoods] = useState([]);
-  const [foodCOunt, setFoodCount] = useState(0);
-  // console.log(foods);
-  const [loadingCheck, setLoadingCheck] = useState(true);
-  const totalPage = Math.ceil(foodCOunt / itemsPerPage);
-  const pageNumber = [...Array(totalPage).keys()];
-  const [pageNum, setPageNum] = useState(0);
-  console.log(pageNum);
 
-  const refetch = () => {
-    if (window.location.pathname === "/") {
-      fetch(url + `Offers`)
-        .then((res) => res.json())
-        .then((data) => {
-          setTimeout(() => {
-            setLoadingCheck(false);
-          }, 2000);
-          setFoods(data);
-        });
-    } else if (window.location.pathname === "/TodaysOffer") {
-      fetch(ServerUrl + `OfferedProducts?page=${pageNum}&limit=${itemsPerPage}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setTimeout(() => {
-            setLoadingCheck(false);
-          }, 2000);
-          setFoodCount(data.count);
-          setFoods(data.data);
-        });
-    }
-    if (window.screen.width <= 425) {
-      setItemsPerPage(4);
-      return;
-    }
-    if (768 > window.screen.width <= 1024 && window.location.pathname === "/") {
-      setItemsPerPage(6);
-    }
-    if (1025 <= window.screen.width && window.location.pathname === "/") {
-      setItemsPerPage(8);
-    }
-  };
+  const [loadingCheck, setLoadingCheck] = useState(true);
+
+  const { searchResut } = useContext(contexts);
   useEffect(() => {
-    window.scrollTo(0, 0);
-    refetch();
-  }, []);
+    setTimeout(() => {
+      setLoadingCheck(false);
+    }, 1000);
+  });
   const {
     register,
     handleSubmit,
@@ -184,28 +148,7 @@ const SwipeCardSection = () => {
     }
     reset();
   };
-  const [showMore, setShowMore] = useState(false);
-  const [from, setFrom] = useState(null);
-  const [to, setTo] = useState(null);
-  useEffect(() => {
-    if (window.screen.width <= 425 && window.location.pathname === "/") {
-      setFrom(0);
-      setTo(3);
-      setShowMore(true);
-      return;
-    }
-    if (768 > window.screen.width <= 1024 && window.location.pathname === "/") {
-      setFrom(0);
-      setShowMore(true);
-      setTo(6);
-    }
-    if (1025 <= window.screen.width && window.location.pathname === "/") {
-      setFrom(0);
-      setTo(8);
-      setShowMore(true);
-    }
-  }, []);
-
+  console.log(searchResut);
   return (
     <div className="">
       {loadingCheck ? (
@@ -222,7 +165,7 @@ const SwipeCardSection = () => {
           {" "}
           <div className="xl: lg:w-[85%] mx-auto grid lg:grid-cols-3 xl:grid-cols-4 gap-x-3 mb-10 items-center gap-y-6 justify-center mt-10">
             {window.location.pathname === "/" &&
-              foods.slice(from, to).map((x, i) => (
+              searchResut?.map((x, i) => (
                 <>
                   <SingleCard2
                     setInitialPrice={setInitialPrice}
@@ -232,17 +175,7 @@ const SwipeCardSection = () => {
                   ></SingleCard2>
                 </>
               ))}
-            {window.location.pathname !== "/" &&
-              foods?.map((x, i) => (
-                <>
-                  <SingleCard2
-                    setInitialPrice={setInitialPrice}
-                    key={i}
-                    setFoodData={setFoodData}
-                    data={x}
-                  ></SingleCard2>
-                </>
-              ))}
+
             <dialog id="my_modal_1" className="modal ">
               {loding ? (
                 <>
@@ -267,7 +200,7 @@ const SwipeCardSection = () => {
                       <div className=" mt-8 my-3 mx-auto lg:h-[75px] bg-accent pb-1 bg-opacity-10 rounded-2xl relative flex flex-col lg:flex-row">
                         <div className="absolute -top-5 -left-1">
                           <img
-                            className="h-[80px] rounded-full object-cover "
+                            className="h-[80px] w-[80px] rounded-full object-cover "
                             src={foodData?.imgUrl}
                             alt=""
                           />
@@ -555,135 +488,10 @@ const SwipeCardSection = () => {
               </div>
             </dialog>
           </div>
-          {showMore && (
-            <div className="flex cursor-pointer justify-center mt-4">
-              <Link
-                to={"/TodaysOffer"}
-                className="btn bg-accent rounded-bl-lg rounded-tl-3xl rounded-br-3xl hover:bg-transparent hover:border hover:border-accent hover:text-accent rounded-tr-lg px-8 text-white"
-              >
-                View All <IoIosArrowDropright className="text-xl" />
-              </Link>
-            </div>
-          )}
         </>
-      )}
-      {window.location.pathname === "/TodaysOffer" && (
-        <div className="flex h-[50px] items-center mt-10 ms-10 transform duration-300 gap-x-[4px]">
-          <div className={`w-[30px]  h-[30px]  `}>
-            {pageNum > 0 && (
-              <div
-                onClick={() => {
-                  if (pageNum === 0) {
-                    return;
-                  }
-                  if (window.screen.width <= 425) {
-                    window.scrollTo(0, 250);
-                  } else {
-                    window.scrollTo(0, 300);
-                  }
-                  setLoadingCheck(true);
-                  setPageNum(pageNum - 1);
-                  fetch(
-                    ServerUrl +
-                      `OfferedProducts?page=${
-                        pageNum - 1
-                      }&limit=${itemsPerPage}`
-                  )
-                    .then((res) => res.json())
-                    .then((data) => {
-                      setLoadingCheck(false);
-
-                      setFoodCount(data.count);
-                      setFoods(data.data);
-                    });
-                }}
-                className="animate-pulse"
-              >
-                <button
-                  className={`w-[30px]  h-[30px] border  text-accent hover:scale-100 border-accent transform duration-500  flex justify-center items-center text-center ${
-                    pageNum > 0
-                      ? "opacity-100 transform duration-300"
-                      : "opacity-0 transform duration-300"
-                  } rounded-xl`}
-                >
-                  <IoIosArrowForward className="text-center rotate-180" />
-                </button>
-              </div>
-            )}
-          </div>
-          {pageNumber.map((number, i) => (
-            <button
-              className={` border  ${
-                pageNum === i
-                  ? "text-white w-[30px]  h-[40px] transform duration-500 bg-accent  border-accent   rounded-3xl"
-                  : "text-accent border-2 rounded-full w-[12px] text-opacity-0 h-[12px] border-accent transform duration-500"
-              } `}
-              onClick={() => {
-                setPageNum(number);
-                setLoadingCheck(true);
-                if (window.screen.width <= 425) {
-                  window.scrollTo(0, 250);
-                } else {
-                  window.scrollTo(0, 300);
-                }
-
-                fetch(
-                  ServerUrl +
-                    `OfferedProducts?page=${number}&limit=${itemsPerPage}`
-                )
-                  .then((res) => res.json())
-                  .then((data) => {
-                    setLoadingCheck(false);
-
-                    setFoodCount(data.count);
-                    setFoods(data.data);
-                  });
-              }}
-              key={number}
-            >
-              {number}
-            </button>
-          ))}
-
-          {pageNum + 1 !== totalPage && (
-            <div
-              onClick={() => {
-                if (pageNum + 1 === totalPage) {
-                  return;
-                }
-                setLoadingCheck(true);
-                setPageNum(pageNum + 1);
-                if (window.screen.width <= 425) {
-                  window.scrollTo(0, 250);
-                } else {
-                  window.scrollTo(0, 300);
-                }
-
-                fetch(
-                  ServerUrl +
-                    `OfferedProducts?page=${pageNum + 1}&limit=${itemsPerPage}`
-                )
-                  .then((res) => res.json())
-                  .then((data) => {
-                    setLoadingCheck(false);
-
-                    setFoodCount(data.count);
-                    setFoods(data.data);
-                  });
-              }}
-              className="animate-pulse"
-            >
-              <button
-                className={`w-[30px]  h-[30px] border  text-accent hover:scale-100 border-accent transform duration-500  flex justify-center items-center text-center  rounded-xl`}
-              >
-                <IoIosArrowForward className="text-center" />
-              </button>
-            </div>
-          )}
-        </div>
       )}
     </div>
   );
 };
 
-export default SwipeCardSection;
+export default SearchCard;

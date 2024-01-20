@@ -6,7 +6,7 @@ import loadingAnimation from "../../../assets/animation/componentLoader.json";
 import { IoArrowForwardCircle } from "react-icons/io5";
 import { IoIosArrowDroprightCircle, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
-import SingleCard from "./SingleCard";
+
 import gradientImg from "../../../assets/ErrorPageElement/gardientBg.png";
 import { ServerUrl } from "../../../Utilities/Server/Url";
 import Lottie from "lottie-react";
@@ -18,7 +18,9 @@ import useAuth from "../../../hooks/useAuth";
 import { HiOutlineCash, HiOutlineCreditCard } from "react-icons/hi";
 import { MdCheckCircle } from "react-icons/md";
 import { TbBrandPaypal } from "react-icons/tb";
-const Menu = () => {
+import PopularCard from "./PopularCard";
+
+const Popular = () => {
   const [category, setCategory] = useState("pizza");
   const [foods, setFoods] = useState([]);
   const [loadingCheck, setLoadingCheck] = useState(true);
@@ -42,6 +44,7 @@ const Menu = () => {
     reset,
     formState: { errors },
   } = useForm();
+  console.log(foodData);
   const [orderId, setOrderId] = useState("");
   const onSubmit = (data) => {
     console.log(data);
@@ -78,14 +81,15 @@ const Menu = () => {
           console.log(data);
 
           setOrderId(data.insertedId);
-          document.getElementById("my_modal_3").close();
-          document.getElementById("my_modal_4").showModal();
+          document.getElementById("my_modal_5").close();
+          document.getElementById("my_modal_6").showModal();
           setTimeout(() => {
-            document.getElementById("my_modal_4").close();
+            document.getElementById("my_modal_6").close();
             setOrderId("");
           }, 5000);
         });
     }
+
     if (Paypal && !CreditCard && !Cash) {
       const newData2 = {
         ...newData,
@@ -108,10 +112,10 @@ const Menu = () => {
           console.log(data);
 
           setOrderId(data.insertedId);
-          document.getElementById("my_modal_3").close();
-          document.getElementById("my_modal_4").showModal();
+          document.getElementById("my_modal_5").close();
+          document.getElementById("my_modal_6").showModal();
           setTimeout(() => {
-            document.getElementById("my_modal_4").close();
+            document.getElementById("my_modal_6").close();
             setOrderId("");
           }, 5000);
         });
@@ -138,24 +142,24 @@ const Menu = () => {
           setCash(false);
           setCreditCard(true);
           setPaypal(false);
-          document.getElementById("my_modal_3").close();
+          document.getElementById("my_modal_5").close();
 
           setOrderId(data.insertedId);
-          document.getElementById("my_modal_4").showModal();
+          document.getElementById("my_modal_6").showModal();
           setTimeout(() => {
-            document.getElementById("my_modal_4").close();
+            document.getElementById("my_modal_6").close();
             setOrderId("");
           }, 5000);
         });
     }
     reset();
   };
-  const fetching = (categorys) => {
+  const fetching = () => {
     if (
       window.location.pathname === "/" &&
       window.location.pathname !== "/Menu"
     ) {
-      fetch(ServerUrl + `Foods?category=${categorys}`)
+      fetch(ServerUrl + `Popular`)
         .then((res) => res.json())
         .then((data) => {
           setFoods(data);
@@ -163,12 +167,9 @@ const Menu = () => {
           console.log(data);
         });
     }
-    if (window.location.pathname === "/Menu") {
+    if (window.location.pathname === "/Popular") {
       setPageNum(0);
-      fetch(
-        ServerUrl +
-          `FoodsPagination?category=${categorys}&page=${0}&limit=${itemsPerPage}`
-      )
+      fetch(ServerUrl + `PopularPagination?page=${0}&limit=${itemsPerPage}`)
         .then((res) => res.json())
         .then((data) => {
           setTimeout(() => {
@@ -218,126 +219,24 @@ const Menu = () => {
   console.log(pageNum);
   return (
     <div
-      id="Menu"
+      data-aos="fade-zoom-in"
+      data-aos-easing="ease-in-back"
+      data-aos-delay="300"
+      data-aos-offset="0"
+      id="Popular"
       className={`${window.location.pathname === "/" && "my-[120px]"} mx-4`}
     >
       {window.location.pathname === "/" && (
-        <h1
-          style={{ lineHeight: "normal" }}
-          className="md:text-[38px] xl:text-[48px] w-[80%] mx-auto lg:w-[553px] xl:w-[703px] text-3xl font-semibold text-center mt-5 mb-[40px]"
-        >
-          <span className="text-accent">Menu</span> That{" "}
-          <span className="text-secondary">Always</span> Make You Fall In{" "}
-          <span className="text-accent">Love</span>
-        </h1>
+        <div className="flex items-center mb-10">
+          <h1
+            style={{ lineHeight: "normal" }}
+            className="md:text-[38px] xl:text-[48px]  ms-14 mx-auto  text-3xl font-semibold text-start  "
+          >
+            <span className="text-accent">Our</span>{" "}
+            <span className="text-secondary">Popular</span> Food{" "}
+          </h1>
+        </div>
       )}
-      <div className=" overflow-scroll mx-auto lg:w-[70%] w-full flex lg:gap-x-4 lg:justify-center containerWithoutScrollBar">
-        <div
-          onClick={() => {
-            setCategory("pizza");
-            setFoods([]);
-            setLoadingCheck(true);
-            fetching("pizza");
-          }}
-          className={`${
-            category === "pizza"
-              ? "bg-accent text-white bg-opacity-80"
-              : "border border-accent bg-accent bg-opacity-5 text-accent"
-          } cursor-pointer flex-shrink-0 rounded-3xl h-[180px] w-[90px] transform duration-300 ms-1 lg:w-[112px] lg:h-[236px]`}
-        >
-          <img className="w-[64px] mx-auto mt-5" src={Pizza} alt="" />
-          <h1 className="text-center my-3 lg:my-6  font-bold ">Pizza</h1>
-          <hr
-            className={`w-[60%] ${
-              category === "pizza" ? " border-white  " : " border-accent "
-            }   mx-auto border bg-transparent`}
-          />
-          <IoIosArrowDroprightCircle
-            className={`${
-              category === "pizza" ? " text-white  " : " text-accent "
-            }   text-2xl mt-2 lg:mt-5 mx-auto`}
-          />
-        </div>
-        <div
-          onClick={() => {
-            setCategory("fruits");
-            setFoods([]);
-            setLoadingCheck(true);
-            fetching("fruits");
-          }}
-          className={`${
-            category === "fruits"
-              ? "bg-accent text-white bg-opacity-80"
-              : "border border-accent bg-accent bg-opacity-5 text-accent"
-          } cursor-pointer transform duration-300 flex-shrink-0 rounded-3xl h-[180px] w-[90px] ms-1 lg:w-[112px] lg:h-[236px]`}
-        >
-          <img className="w-[64px] mx-auto mt-5" src={fruits} alt="" />
-          <h1 className="text-center my-3 lg:my-6  font-bold ">Fruits</h1>
-          <hr
-            className={`w-[60%] ${
-              category === "fruits" ? " border-white  " : " border-accent "
-            }   mx-auto border bg-transparent`}
-          />
-          <IoIosArrowDroprightCircle
-            className={`${
-              category === "fruits" ? " text-white  " : " text-accent "
-            }   text-2xl mt-2 lg:mt-5 mx-auto`}
-          />
-        </div>
-        <div
-          onClick={() => {
-            setCategory("snacks");
-            setFoods([]);
-            setLoadingCheck(true);
-            fetching("snacks");
-          }}
-          className={`${
-            category === "snacks"
-              ? "bg-accent text-white bg-opacity-80"
-              : "border border-accent bg-accent bg-opacity-5 text-accent"
-          } cursor-pointer flex-shrink-0 rounded-3xl h-[180px] w-[90px] ms-1 transform duration-300 lg:w-[112px] lg:h-[236px]`}
-        >
-          <img className="w-[64px] mx-auto mt-5" src={snacks} alt="" />
-          <h1 className="text-center my-3 lg:my-6  font-bold ">Snacks</h1>
-          <hr
-            className={`w-[60%] ${
-              category === "snacks" ? " border-white  " : " border-accent "
-            }   mx-auto border bg-transparent`}
-          />
-          <IoIosArrowDroprightCircle
-            className={`${
-              category === "snacks" ? " text-white  " : " text-accent "
-            }   text-2xl mt-2 lg:mt-5 mx-auto`}
-          />
-        </div>
-        <div
-          onClick={() => {
-            setCategory("drinks");
-            setFoods([]);
-            setLoadingCheck(true);
-            fetching("drinks");
-          }}
-          className={`${
-            category === "drinks"
-              ? "bg-accent text-white bg-opacity-80"
-              : "border border-accent bg-accent bg-opacity-5 text-accent"
-          } cursor-pointer transform duration-300 flex-shrink-0 rounded-3xl h-[180px] w-[90px] ms-1 lg:w-[112px] lg:h-[236px]`}
-        >
-          <img className="w-[64px] mx-auto mt-5" src={drinks} alt="" />
-          <h1 className="text-center my-3 lg:my-6  font-bold ">Drinks</h1>
-          <hr
-            className={`w-[60%] ${
-              category === "drinks" ? " border-white  " : " border-accent "
-            }   mx-auto border bg-transparent`}
-          />
-          <IoIosArrowDroprightCircle
-            className={`${
-              category === "drinks" ? " text-white  " : " text-accent "
-            }   text-2xl mt-2 lg:mt-5 mx-auto`}
-          />
-        </div>
-      </div>
-
       {loadingCheck ? (
         <div className="min-h-screen h-full w-full flex items-center justify-center">
           <Lottie
@@ -346,31 +245,31 @@ const Menu = () => {
           />
         </div>
       ) : (
-        <div className="mt-10 flex flex-col justify-center items-center gap-x-2 gap-y-5 lg:grid lg:grid-cols-3 xl:grid-cols-4 lg:w-[90%] xl:w-[90%] mx-auto">
+        <div className="mt-10 flex flex-col justify-center items-center gap-y-14 lg:grid lg:grid-cols-3 xl:grid-cols-3  lg:w-[95%] xl:w-[85%] mx-auto">
           {window.location.pathname === "/" &&
             foods.slice(from, to).map((x, i) => (
               <>
-                <SingleCard
+                <PopularCard
                   setInitialPrice={setInitialPrice}
                   key={i}
                   setFoodData={setFoodData}
                   datas={x}
-                ></SingleCard>
+                ></PopularCard>
               </>
             ))}
           {window.location.pathname !== "/" &&
             foods?.map((x, i) => (
               <>
-                <SingleCard
+                <PopularCard
                   datas={x}
                   setInitialPrice={setInitialPrice}
                   key={i}
                   setFoodData={setFoodData}
-                ></SingleCard>
+                ></PopularCard>
               </>
             ))}
 
-          <dialog id="my_modal_3" className="modal ">
+          <dialog id="my_modal_5" className="modal ">
             {loding ? (
               <>
                 <div className=" w-full flex items-center justify-center">
@@ -633,7 +532,7 @@ const Menu = () => {
                       type="button"
                       onClick={() => {
                         setFoodData([]);
-                        document.getElementById("my_modal_3").close();
+                        document.getElementById("my_modal_5").close();
                       }}
                       className="rotate-45 rounded-full p-2 absolute -bottom-12 right-2 bg-opacity-55 text-white bg-accent text-xl"
                     >
@@ -646,7 +545,7 @@ const Menu = () => {
 
             <Toaster></Toaster>
           </dialog>
-          <dialog id="my_modal_4" className="modal ">
+          <dialog id="my_modal_6" className="modal ">
             <div
               style={{
                 backgroundImage: `url(${gradientImg})`,
@@ -669,7 +568,7 @@ const Menu = () => {
                 type="button"
                 onClick={() => {
                   setFoodData([]);
-                  document.getElementById("my_modal_4").close();
+                  document.getElementById("my_modal_6").close();
                 }}
                 className="rotate-45 rounded-full p-1 absolute bottom-1 right-3 bg-opacity-55 text-white bg-accent text-xl"
               >
@@ -680,22 +579,7 @@ const Menu = () => {
         </div>
       )}
 
-      {window.location.pathname === "/" && (
-        <div className="flex cursor-pointer me-5 lg:me-10 justify-end mt-14">
-          <Link
-            to={"/Menu"}
-            className="flex px-6 text-base hover:bg-white py-3 btn bg-white rounded-md hover:text-accent border  hover:border-accent rounded-bl-3xl rounded-tr-3xl gap-x-2 items-center"
-          >
-            View All{" "}
-            <IoIosArrowDroprightCircle
-              className={`${
-                category === "snacks" ? " text-white  " : " text-accent "
-              }   text-2xl  mx-auto`}
-            />
-          </Link>
-        </div>
-      )}
-      {window.location.pathname === "/Menu" && (
+      {window.location.pathname === "/Popular" && (
         <div className="flex h-[50px] items-center mt-10 ms-10 transform duration-300 gap-x-[4px]">
           <div className={`w-[30px]  h-[30px]  `}>
             {pageNum > 0 && (
@@ -713,7 +597,7 @@ const Menu = () => {
                   }
                   fetch(
                     ServerUrl +
-                      `FoodsPagination?category=${category}&&page=${
+                      `PopularPagination?page=${
                         pageNum - 1
                       }&limit=${itemsPerPage}`
                   )
@@ -757,7 +641,7 @@ const Menu = () => {
 
                 fetch(
                   ServerUrl +
-                    `FoodsPagination?category=${category}&&page=${number}&limit=${itemsPerPage}`
+                    `PopularPagination?page=${number}&limit=${itemsPerPage}`
                 )
                   .then((res) => res.json())
                   .then((data) => {
@@ -789,7 +673,7 @@ const Menu = () => {
 
                 fetch(
                   ServerUrl +
-                    `FoodsPagination?category=${category}&&page=${
+                    `PopularPagination?page=${
                       pageNum + 1
                     }&limit=${itemsPerPage}`
                 )
@@ -812,8 +696,25 @@ const Menu = () => {
           )}
         </div>
       )}
+      {window.location.pathname === "/" && (
+        <div className="flex items-center justify-end mt-5 mb-10">
+          <div className="flex cursor-pointer me-5 lg:me-10 justify-end ">
+            <Link
+              to={"/Popular"}
+              className="flex px-6 text-base  py-3  bg-white rounded-md hover:text-accent  rounded-bl-3xl rounded-tr-3xl gap-x-2 items-center"
+            >
+              View All{" "}
+              <IoIosArrowDroprightCircle
+                className={`${
+                  category === "snacks" ? " text-white  " : " text-accent "
+                }   text-2xl  mx-auto`}
+              />
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Menu;
+export default Popular;

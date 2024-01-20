@@ -5,12 +5,12 @@ import cardAnimation from "../../../assets/animation/cardLoading.json";
 import "aos/dist/aos.css";
 import Aos from "aos";
 Aos.init();
-const SingleCard = ({ datas, setFoodData, setInitialPrice }) => {
+const PopularCard = ({ datas, setFoodData, setInitialPrice }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [imgloaded, setImgLoaded] = useState(false);
   const [onfocus, setOnfocus] = useState(false);
   return (
-    <div data-aos="zoom-in">
+    <div data-aos="fade-down" className="">
       {" "}
       <div
         onClick={() => {
@@ -29,10 +29,12 @@ const SingleCard = ({ datas, setFoodData, setInitialPrice }) => {
         }}
         className="cursor-pointer relative flex flex-col items-center   "
       >
-        <div className="xl:w-[253px] w-[253px]  relative flex justify-center xl:-mb-24 -mb-24 items-center lg:w-[195px] h-[253px]">
+        <div className="xl:w-[190px] w-[190px]  absolute -right-8 flex justify-end  items-start lg:w-[195px] -top-5  h-[163px]">
           {!imgloaded && (
             <Lottie
-              className="h-[160px] bg-white border-2 border-accent border-opacity-30 z-50 w-[160px] object-cover absolute rounded-full"
+              style={{ boxShadow: "0px 0px 5px #F54748" }}
+              className="h-[140px] bg-white 
+               z-50 w-[140px] mx-auto object-cover absolute rounded-full"
               animationData={cardAnimation}
             />
           )}
@@ -42,7 +44,9 @@ const SingleCard = ({ datas, setFoodData, setInitialPrice }) => {
             style={{ boxShadow: "0px 0px 5px #F54748" }}
             className={`${
               onfocus && "scale-105 transform duration-500"
-            } w-[160px] hover:scale-105 mx-auto transform duration-500 z-30 h-[160px] object-cover  rounded-full`}
+            } w-[140px] hover:scale-105 mx-auto transform duration-500 z-30 h-[140px] object-cover  rounded-full ${
+              imgloaded ? "block" : "hidden"
+            }`}
             alt=""
           />
         </div>
@@ -51,25 +55,21 @@ const SingleCard = ({ datas, setFoodData, setInitialPrice }) => {
             onfocus
               ? "bg-accent text-white transform duration-300"
               : "bg-white text-accent transform duration-300"
-          } w-[251px] border-opacity-25 h-[242px]  border-2 border-accent  rounded-[20px] `}
+          } w-[284px] border-opacity-25 h-[200px]  border-2 border-accent  rounded-[20px] `}
         >
           {/* <h1 className="h-[120px] "></h1> */}
 
-          <h1 className="mt-[80px] text-start mx-5   font-semibold">
+          <h1 className="mt-[45px] text-start mx-5   font-semibold">
             {datas.name}
           </h1>
-          <h1 className="mx-5 text-sm text-start mt-4">
-            {showDetails
-              ? datas.description
-              : `${datas.description.slice(0, 90)}`}
-
-            {!showDetails && <span className="text-accent">...</span>}
+          <h1 className="mx-5 h-[40px] text-sm text-start mt-4">
+            {datas.orders} People Ordered
           </h1>
 
-          <div className="mx-5 flex justify-between items-center mt-3">
+          <div className="mx-5 flex flex-col items-start mb-3">
             <h1 className="font-semibold ">$ {datas.price}</h1>
             <div
-              className={`w-[30px] rounded-full  flex items-center justify-center h-[30px] transform duration-500 ${
+              className={`w-[30px] mt-1 rounded-full  flex items-center justify-center h-[30px] transform duration-500 ${
                 onfocus ? "text-accent bg-white" : "text-white bg-accent"
               }`}
             >
@@ -78,7 +78,7 @@ const SingleCard = ({ datas, setFoodData, setInitialPrice }) => {
                   setInitialPrice(datas.price);
                   setFoodData(datas);
 
-                  document.getElementById("my_modal_3").showModal();
+                  document.getElementById("my_modal_5").showModal();
                 }}
                 className="text-xl "
               />
@@ -90,4 +90,4 @@ const SingleCard = ({ datas, setFoodData, setInitialPrice }) => {
   );
 };
 
-export default SingleCard;
+export default PopularCard;

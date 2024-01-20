@@ -19,7 +19,12 @@ import gradientImg from "../../assets/ErrorPageElement/gardientBg.png";
 import profileImg from "../../assets/cartPicture/PersonMale.svg";
 import Order from "./Route/Order";
 import { SiBlockchaindotcom } from "react-icons/si";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ServerUrl } from "../Server/Url";
+import MyOrders from "./Route/MyOrders";
+import { IoIosArrowForward } from "react-icons/io";
+import Lottie from "lottie-react";
+import loadingAnimation from "../../assets/animation/componentLoader.json";
 const Nav = () => {
   const [showNav, setShowNav] = useState(false);
   const [offer, setOffer] = useState(false);
@@ -29,6 +34,52 @@ const Nav = () => {
   const [Cart, setCart] = useState(false);
   const [Home, setHome] = useState(true);
   const { user, LogOut, setUser } = useAuth();
+
+  const [Orders, setOrders] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [OrdersCount, setOrdersCount] = useState(0);
+  //
+  const [loadingCheck, setLoadingCheck] = useState(true);
+  const totalPage = Math.ceil(OrdersCount / itemsPerPage);
+  const pageNumber = [...Array(totalPage).keys()];
+  const [pageNum, setPageNum] = useState(0);
+  const fetching = (number) => {
+    setOrders([]);
+    fetch(
+      ServerUrl +
+        `Orders?email=${user?.email}&page=${number}&limit=${itemsPerPage}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setTimeout(() => {
+          setLoadingCheck(false);
+        }, 2000);
+        console.log(data.data);
+        setOrdersCount(data.count);
+        setOrders(data.data);
+      });
+  };
+  useEffect(() => {
+    setOrders([]);
+    fetch(
+      ServerUrl + `Orders?email=${user?.email}&page=${0}&limit=${itemsPerPage}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setTimeout(() => {
+          setLoadingCheck(false);
+        }, 2000);
+        console.log(data.data);
+        setOrdersCount(data.count);
+        setOrders(data.data);
+      });
+    if (window.screen.width <= 425) {
+      setItemsPerPage(4);
+    } else if (426 <= window.screen.width && window.location.pathname === "/") {
+      setItemsPerPage(4);
+    }
+  }, []);
+
   const handleLogOut = () => {
     LogOut()
       .then(() => {
@@ -75,7 +126,7 @@ const Nav = () => {
           <HiMenuAlt1 />
         </div>
         <div className="lg:flex hidden items-center">
-          <div className="lg:flex xl:text-[18px] gap-x-5 xl:gap-x-[50px]  me-10 xl:me-[80px] text-black">
+          <div className="lg:flex xl:text-[18px] gap-x-5 xl:gap-x-[50px]  me-10 cursor-pointer xl:me-[80px] text-black">
             <Link
               to={"/"}
               onClick={() => {
@@ -106,7 +157,7 @@ const Nav = () => {
                     setCart(false);
                     setOurMenu(false);
                     setPopular(false);
-                    setShowNav(!showNav);
+                    setShowNav(false);
                     setwhyFoodHut(false);
                   }}
                   className={`${
@@ -127,7 +178,7 @@ const Nav = () => {
                   setCart(false);
                   setOurMenu(false);
                   setPopular(false);
-                  setShowNav(!showNav);
+                  setShowNav(false);
                   setwhyFoodHut(false);
                 }}
                 className={`${
@@ -139,21 +190,7 @@ const Nav = () => {
                 Today&apos;sOffer <FaFire />
               </a>
             )}
-            {/* <Link
-              onClick={() => {
-                setOffer(false);
-                setCart(false);
-                setOurMenu(false);
-                setPopular(false);
-                setShowNav(!showNav);
-                setwhyFoodHut(true);
-              }}
-              className={`${
-                whyFoodHut ? "activeC" : ""
-              } text-sm flex items-center gap-x-1 `}
-            >
-              Why FoodHut <FaRegCircleQuestion />
-            </Link> */}
+
             {window.location.pathname !== "/" &&
             window.location.pathname !== "/Menu" ? (
               <Link to={"/"}>
@@ -200,37 +237,69 @@ const Nav = () => {
                 Our Menu <PiBowlFoodBold />
               </a>
             )}
+            {window.location.pathname !== "/" &&
+            window.location.pathname !== "/Popular" ? (
+              <Link to={"/"}>
+                <a
+                  href="#Popular"
+                  onClick={() => {
+                    setTimeout(() => {
+                      document.getElementById("click3").click();
+                    }, 2000);
+                    setOffer(false);
+                    setCart(false);
+                    setOurMenu(false);
+                    setPopular(true);
+                    setShowNav(false);
+                    setwhyFoodHut(false);
+                  }}
+                  className={`${
+                    Popular || window.location.pathname === "/Popular"
+                      ? "activeC"
+                      : ""
+                  } text-sm flex items-center gap-x-1 `}
+                >
+                  OurPopularFood <TiStarFullOutline />
+                </a>
+              </Link>
+            ) : (
+              <a
+                href="#Popular"
+                id="click3"
+                onClick={() => {
+                  setOffer(false);
+                  setCart(false);
+                  setOurMenu(false);
+                  setPopular(true);
+                  setShowNav(false);
+                  setwhyFoodHut(false);
+                }}
+                className={`${
+                  Popular || window.location.pathname === "/Popular"
+                    ? "activeC"
+                    : ""
+                } text-sm flex items-center gap-x-1 `}
+              >
+                OurPopularFood <TiStarFullOutline />
+              </a>
+            )}
 
-            {/* <Link
-              onClick={() => {
-                setOffer(false);
-                setCart(false);
-                setOurMenu(false);
-                setPopular(true);
-                setShowNav(!showNav);
-                setwhyFoodHut(false);
-              }}
-              className={`${
-                Popular ? "activeC" : ""
-              } text-sm flex items-center gap-x-1 `}
-            >
-              Our Popular Food <TiStarFullOutline />
-            </Link> */}
             <div
               onClick={() => {
                 setOffer(false);
-                setCart(true);
+                setCart(!Cart);
                 setOurMenu(false);
                 setPopular(false);
-                setShowNav(!showNav);
+                setShowNav(false);
                 setwhyFoodHut(false);
                 setcartCheck(!cartCheck);
+                fetching(0);
               }}
               className={`${
                 Cart ? "activeC" : ""
               } text-sm flex items-center gap-x-1 `}
             >
-              Cart <PiShoppingCartSimpleBold />
+              MyOrders <PiShoppingCartSimpleBold />
             </div>
           </div>
           {user ? (
@@ -281,11 +350,141 @@ const Nav = () => {
             <h1 className="text-xs font-Poppins">{user?.email}</h1>
           </div>
         </div>
-        <div>
-          <Order />
-        </div>
+        <h1 className="ms-[24px] font-Poppins font-semibold text-accent">
+          My Orders
+        </h1>
+        <hr className="mt-4 w-[90%] mx-auto border border-accent" />
+        {user ? (
+          <>
+            {loadingCheck ? (
+              <div className="h-[370px] lg:h-[500px] w-full flex items-center justify-center">
+                <Lottie
+                  className="w-[60%] lg:w-[30%]"
+                  animationData={loadingAnimation}
+                />
+              </div>
+            ) : (
+              <>
+                {Orders.length > 0 ? (
+                  <>
+                    {Orders.map((x) => (
+                      <>
+                        <MyOrders data={x} />
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <div className="text-center my-10 text-accent">
+                      No Orders Found
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="text-center my-10 text-accent">
+              Please{" "}
+              <Link to={"/SignIn"} className="link btn-link">
+                Sign in
+              </Link>{" "}
+              first
+            </div>
+          </>
+        )}
+
+        {user && pageNumber.length > 0 && (
+          <div className="flex h-[50px] items-center my-5 ms-5 transform duration-300 gap-x-[4px]">
+            <div className={`w-[30px]  h-[30px]  `}>
+              {pageNum > 0 && (
+                <div
+                  onClick={() => {
+                    if (pageNum === 0) {
+                      return;
+                    }
+                    if (window.screen.width <= 425) {
+                      window.scrollTo(0, 40);
+                    } else {
+                      window.scrollTo(0, 40);
+                    }
+                    setLoadingCheck(true);
+                    setPageNum(pageNum - 1);
+                    fetching(pageNum - 1);
+                  }}
+                  className="animate-pulse"
+                >
+                  <button
+                    className={`w-[30px]  h-[30px] border  text-accent hover:scale-100 border-accent transform duration-500  flex justify-center items-center text-center ${
+                      pageNum > 0
+                        ? "opacity-100 transform duration-300"
+                        : "opacity-0 transform duration-300"
+                    } rounded-xl`}
+                  >
+                    <IoIosArrowForward className="text-center rotate-180" />
+                  </button>
+                </div>
+              )}
+            </div>
+            {pageNumber.map((number, i) => (
+              <button
+                className={` border  ${
+                  pageNum === i
+                    ? "text-white w-[30px]  h-[40px] transform duration-500 bg-accent  border-accent   rounded-3xl"
+                    : "text-accent border-2 rounded-full w-[12px] text-opacity-0 h-[12px] border-accent transform duration-500"
+                } `}
+                onClick={() => {
+                  setPageNum(number);
+                  setLoadingCheck(true);
+                  if (window.screen.width <= 425) {
+                    window.scrollTo(0, 40);
+                  } else {
+                    window.scrollTo(0, 40);
+                  }
+
+                  fetching(number);
+                }}
+                key={number}
+              >
+                {number}
+              </button>
+            ))}
+
+            {pageNum + 1 !== totalPage && (
+              <div
+                onClick={() => {
+                  if (pageNum + 1 === totalPage) {
+                    return;
+                  }
+                  setLoadingCheck(true);
+                  setPageNum(pageNum + 1);
+                  if (window.screen.width <= 425) {
+                    window.scrollTo(0, 40);
+                  } else {
+                    window.scrollTo(0, 40);
+                  }
+
+                  fetching(pageNum + 1);
+                }}
+                className="animate-pulse"
+              >
+                <button
+                  className={`w-[30px]  h-[30px] border  text-accent hover:scale-100 border-accent transform duration-500  flex justify-center items-center text-center  rounded-xl`}
+                >
+                  <IoIosArrowForward className="text-center" />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
         <button
-          onClick={() => setcartCheck(!cartCheck)}
+          onClick={() => {
+            setcartCheck(false);
+            setCart(false);
+            setPageNum(0);
+            fetching(0);
+          }}
           className="rotate-45 rounded-full p-2 absolute bottom-5 right-5 bg-opacity-55 text-white bg-accent text-xl"
         >
           +
@@ -304,7 +503,7 @@ const Nav = () => {
         } border-2 transform duration-300 border-accent w-[215px] bg-white`}
       >
         {" "}
-        <div className="flex flex-col m-5 gap-y-2">
+        <div className="flex cursor-pointer flex-col m-5 gap-y-2">
           <Link
             to={"/"}
             onClick={() => {
@@ -417,36 +616,68 @@ const Nav = () => {
             </a>
           )}
 
-          <Link
-            onClick={() => {
-              setOffer(false);
-              setCart(false);
-              setOurMenu(false);
-              setPopular(true);
-              setShowNav(!showNav);
-              setwhyFoodHut(false);
-            }}
-            className={`${
-              Popular ? "activeC" : ""
-            } text-sm flex items-center gap-x-1 `}
-          >
-            Our Popular Food <TiStarFullOutline />
-          </Link>
+          {window.location.pathname !== "/" &&
+          window.location.pathname !== "/Popular" ? (
+            <Link to={"/"}>
+              <a
+                href="#Popular"
+                onClick={() => {
+                  setTimeout(() => {
+                    document.getElementById("click3").click();
+                  }, 2000);
+                  setOffer(false);
+                  setCart(false);
+                  setOurMenu(false);
+                  setPopular(true);
+                  setShowNav(false);
+                  setwhyFoodHut(false);
+                }}
+                className={`${
+                  Popular || window.location.pathname === "/Popular"
+                    ? "activeC"
+                    : ""
+                } text-sm flex items-center gap-x-1 `}
+              >
+                OurPopularFood <TiStarFullOutline />
+              </a>
+            </Link>
+          ) : (
+            <a
+              href="#Popular"
+              id="click3"
+              onClick={() => {
+                setOffer(false);
+                setCart(false);
+                setOurMenu(false);
+                setPopular(true);
+                setShowNav(false);
+                setwhyFoodHut(false);
+              }}
+              className={`${
+                Popular || window.location.pathname === "/Popular"
+                  ? "activeC"
+                  : ""
+              } text-sm flex items-center gap-x-1 `}
+            >
+              OurPopularFood <TiStarFullOutline />
+            </a>
+          )}
           <div
             onClick={() => {
               setOffer(false);
-              setCart(true);
+              setCart(!Cart);
               setOurMenu(false);
               setPopular(false);
               setShowNav(!showNav);
               setwhyFoodHut(false);
               setcartCheck(!cartCheck);
+              fetching(0);
             }}
             className={`${
               Cart ? "activeC" : ""
             } text-sm flex items-center gap-x-1 `}
           >
-            Cart <PiShoppingCartSimpleBold />
+            MyOrders <PiShoppingCartSimpleBold />
           </div>
           {user ? (
             <>
@@ -468,6 +699,14 @@ const Nav = () => {
               </Link>
             </>
           )}
+          <button
+            onClick={() => {
+              setShowNav(false);
+            }}
+            className="rotate-45 rounded-full p-2 absolute bottom-5 right-5 bg-opacity-55 text-white bg-accent text-xl"
+          >
+            +
+          </button>
         </div>
       </div>
       <Toaster position="top-center" reverseOrder={false} />
