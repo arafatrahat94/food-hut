@@ -88,10 +88,13 @@ const GridDivOne = () => {
             />
           </button>
         </div>
-        <div className="mt-5 ps-[24px] xl:mt-10 mb-36">
-          <button className="py-4  font-semibold bg-accent px-7 text-base-200 rounded-[3rem]">
-            Download App
-          </button>
+        <div className="mt-8 ps-[24px] xl:mt-10 mb-36">
+          <a
+            href="#Menu"
+            className="py-4  font-semibold bg-accent px-7 text-base-200 rounded-[3rem]"
+          >
+            Order Now
+          </a>
         </div>
       </div>
     </div>

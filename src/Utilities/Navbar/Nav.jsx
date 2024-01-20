@@ -503,7 +503,7 @@ const Nav = () => {
         } border-2 transform duration-300 border-accent w-[215px] bg-white`}
       >
         {" "}
-        <div className="flex cursor-pointer flex-col m-5 gap-y-2">
+        <div className="flex cursor-pointer flex-col m-5 gap-y-4">
           <Link
             to={"/"}
             onClick={() => {
@@ -517,7 +517,7 @@ const Nav = () => {
             }}
             className={`${
               window.location.pathname === "/" && Home ? "activeC" : ""
-            } text-sm flex items-center gap-x-1 `}
+            }  flex items-center gap-x-1 `}
           >
             Home <SiBlockchaindotcom />
           </Link>
@@ -542,7 +542,7 @@ const Nav = () => {
                   offer || window.location.pathname === "/TodaysOffer"
                     ? "activeC"
                     : ""
-                } text-sm flex items-center gap-x-1 `}
+                }  flex items-center gap-x-1 `}
               >
                 Today&apos;s Offer <FaFire />
               </a>
@@ -563,7 +563,7 @@ const Nav = () => {
                 offer || window.location.pathname === "/TodaysOffer"
                   ? "activeC"
                   : ""
-              } text-sm flex items-center gap-x-1 `}
+              }  flex items-center gap-x-1 `}
             >
               Today&apos;sOffer <FaFire />
             </a>
@@ -591,7 +591,7 @@ const Nav = () => {
                   OurMenu || window.location.pathname === "/Menu"
                     ? "activeC"
                     : ""
-                } text-sm flex items-center gap-x-1 `}
+                }  flex items-center gap-x-1 `}
               >
                 Our Menu <PiBowlFoodBold />
               </a>
@@ -610,7 +610,7 @@ const Nav = () => {
               }}
               className={`${
                 OurMenu || window.location.pathname === "/Menu" ? "activeC" : ""
-              } text-sm flex items-center gap-x-1 `}
+              }  flex items-center gap-x-1 `}
             >
               Our Menu <PiBowlFoodBold />
             </a>
@@ -636,7 +636,7 @@ const Nav = () => {
                   Popular || window.location.pathname === "/Popular"
                     ? "activeC"
                     : ""
-                } text-sm flex items-center gap-x-1 `}
+                }  flex items-center gap-x-1 `}
               >
                 OurPopularFood <TiStarFullOutline />
               </a>
@@ -657,7 +657,7 @@ const Nav = () => {
                 Popular || window.location.pathname === "/Popular"
                   ? "activeC"
                   : ""
-              } text-sm flex items-center gap-x-1 `}
+              }  flex items-center gap-x-1 `}
             >
               OurPopularFood <TiStarFullOutline />
             </a>
@@ -673,9 +673,7 @@ const Nav = () => {
               setcartCheck(!cartCheck);
               fetching(0);
             }}
-            className={`${
-              Cart ? "activeC" : ""
-            } text-sm flex items-center gap-x-1 `}
+            className={`${Cart ? "activeC" : ""}  flex items-center gap-x-1 `}
           >
             MyOrders <PiShoppingCartSimpleBold />
           </div>
