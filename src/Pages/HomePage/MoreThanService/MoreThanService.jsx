@@ -1,4 +1,8 @@
 import chef from "../../../assets/bannerAndNavbarElements/MoreThanService/chef.svg";
+import img1 from "../../../assets/bannerAndNavbarElements/MoreThanService/mobile.svg";
+import img2 from "../../../assets/bannerAndNavbarElements/MoreThanService/image 17.svg";
+
+import img3 from "../../..//assets/bannerAndNavbarElements/MoreThanService/image 18.svg";
 const MoreThanService = () => {
   return (
     <div className="mt-[84px]">
@@ -17,46 +21,27 @@ const MoreThanService = () => {
           </p>
           <div className="grid lg:ms-0 ms-5 mt-8 lg:grid-cols-2 xl:text-xl w-[85%] text-black gap-y-8  font-semibold lg:mt-12">
             <h1 className="flex gap-x-1">
-              <img
-                src="src\assets\bannerAndNavbarElements\MoreThanService\mobile.svg"
-                alt=""
-              />
+              <img src={img1} alt="" />
               Online Order
             </h1>
             <h1 className="flex gap-x-1">
-              <img
-                src="src\assets\bannerAndNavbarElements\MoreThanService\image 17.svg"
-                alt=""
-              />
+              <img src={img2} alt="" />
               24/7 Service
             </h1>
             <h1 className="flex items-center gap-x-1">
-              <img
-                src="src\assets\bannerAndNavbarElements\MoreThanService\image 18.svg"
-                alt=""
-                className="w-[26px]"
-              />
+              <img src={img3} alt="" className="w-[26px]" />
               Pre-Reservation
             </h1>
             <h1 className="flex gap-x-1 text-nowrap">
-              <img
-                src="/src/assets/bannerAndNavbarElements/MoreThanService/image%2018.svg"
-                alt=""
-              />
+              <img src={img3} alt="" />
               Organized Food hut Place
             </h1>
             <h1 className="flex gap-x-1">
-              <img
-                src="/src/assets/bannerAndNavbarElements/MoreThanService/image%2018.svg"
-                alt=""
-              />
+              <img src={img3} alt="" />
               Super Chef
             </h1>
             <h1 className="flex gap-x-1">
-              <img
-                src="/src/assets/bannerAndNavbarElements/MoreThanService/image%2018.svg"
-                alt=""
-              />
+              <img src={img3} alt="" />
               Clean Kitchen
             </h1>
           </div>
